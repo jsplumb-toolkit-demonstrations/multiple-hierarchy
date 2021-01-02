@@ -118,7 +118,7 @@
 
         toolkit.load({
             data: hierarchy,
-            onload: renderer.zoomToFit
+            onload:function() { renderer.zoomToFit(); }
         });
 
         var datasetView = new jsPlumbSyntaxHighlighter(toolkit, ".jtk-demo-dataset");
