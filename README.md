@@ -131,15 +131,12 @@ This demonstration does not specify anything for the View. It consists of a sing
 This is the call that sets up the UI:
 
 ```javascript
-toolkit.render({
-  container: canvasElement,
+toolkit.render(canvasElement, {
   consumeRightClick: false,
   layout: {
     type: "Hierarchical",
-    parameters: {
-      orientation: "horizontal",
-      padding: [60, 60]
-    }
+    orientation: "horizontal",
+          padding: [60, 60]
   },
   miniview: {
     container: miniviewElement,
@@ -189,10 +186,8 @@ Parameters for the layout.
 ```javascript
 layout: {
   type:"Hierarchical",
-  parameters:{
-    orientation:"horizontal",
-    padding:[60,60]
-  }
+  orientation:"horizontal",
+      padding:[60,60]
 }
 ```
 
@@ -203,10 +198,8 @@ The Hierarchical layout finds the root Nodes in the dataset by searching for Nod
 ```javascript
 layout: {
   type:"Hierarchical",
-  parameters:{
-    orientation:"horizontal",
-    padding:[60,60]
-  },
+  orientation:"horizontal",
+      padding:[60,60],
   multipleRoots:false
 }
 ```
@@ -234,10 +227,8 @@ You can in fact provide your own implementation of this, if you need to:
 ```javascript
 layout: {
   type:"Hierarchical",
-  parameters:{
-    orientation:"horizontal",
-    padding:[60,60]
-  },
+  orientation:"horizontal",
+      padding:[60,60],
   getRootNode:function(toolkit) {
     return TheResultOfSomeComputation();
   }

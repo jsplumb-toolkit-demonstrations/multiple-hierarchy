@@ -45,10 +45,8 @@
             consumeRightClick: false,
             layout: {
                 type: "Hierarchical",
-                parameters: {
-                    orientation: "horizontal",
-                    padding: [60, 60]
-                }
+                orientation: "horizontal",
+                padding: [60, 60]
             },
             miniview: {
                 container:miniviewElement,
