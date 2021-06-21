@@ -1,23 +1,72 @@
 (function () {
 
-    jsPlumbToolkit.ready(function () {
+    jsPlumbToolkitBrowserUI.ready(function () {
 
         // get a new jsPlumb Toolkit instance to use.
-        var toolkit = window.toolkit = jsPlumbToolkit.newInstance({
+        var toolkit = jsPlumbToolkitBrowserUI.newInstance({
             beforeStartDetach:function() { return false; }
         });
 
         var mainElement = document.querySelector("#jtk-demo-multiple-hierarchy"),
             canvasElement = mainElement.querySelector(".jtk-demo-canvas"),
-            miniviewElement = mainElement.querySelector(".miniview");
+            miniviewElement = mainElement.querySelector(".miniview"),
+            controls = document.querySelector(".controls");
+
+        // render the data using a hierarchical layout
+        var renderer = toolkit.render(canvasElement, {
+            consumeRightClick: false,
+            layout: {
+                type: "Hierarchical",
+                options: {
+                    orientation: "horizontal",
+                    padding: {x:60, y:60}
+                }
+            },
+            events: {
+                canvasClick: function (e) {
+                    toolkit.clearSelection();
+                },
+                modeChanged: function (mode) {
+                    renderer.removeClass(controls.querySelectorAll("[mode]"), "selected-mode");
+                    renderer.addClass(controls.querySelectorAll("[mode='" + mode + "']"), "selected-mode");
+                }
+            },
+            refreshLayoutOnEdgeConnect:true,
+            elementsDraggable: false,
+            defaults:{
+                anchors: ["Bottom", "Top"],
+                connector: { type:"StateMachine", options:{ curviness: 10 } },
+                endpoints: [
+                    { type:"Dot", options:{ radius: 2 } },
+                    "Blank"
+                ],
+                endpointStyle: { fill: "#89bcde" },
+                endpointHoverStyle: { fill: "#FF6600" }
+            },
+            plugins:[
+                 {
+                     type:"miniview",
+                     options: {
+                        container: miniviewElement
+                    }
+                },
+                {
+                    type:"lasso",
+                    options:{
+                        filter: ".controls, .controls *, .miniview, .miniview *",
+                        invert:true
+                    }
+                }
+
+            ]
+        });
 
         //
         // use event delegation to attach event handlers to
         // remove buttons. This callback finds the related Node and
         // then tells the toolkit to delete it and all of its descendants.
         //
-        jsPlumb.on(canvasElement, "tap", ".delete", function (e) {
-            var info = toolkit.getObjectInfo(this);
+        renderer.bindModelEvent("tap", ".delete", function (event, target, info) {
             var selection = toolkit.selectDescendants(info.obj, true);
             toolkit.remove(selection);
         });
@@ -27,10 +76,7 @@
         // add buttons. This callback adds an edge from the given node
         // to a newly created node, and then the layout is refreshed automatically.
         //
-        jsPlumb.on(canvasElement, "tap", ".add", function (e) {
-            // this helper method can retrieve the associated
-            // toolkit information from any DOM element.
-            var info = toolkit.getObjectInfo(this);
+        renderer.bindModelEvent("tap", ".add", function (event, target, info) {
             // get data for a random node.
             var n = jsPlumbToolkitDemoSupport.randomNode();
             // add the node to the toolkit
@@ -39,53 +85,13 @@
             toolkit.addEdge({source: info.obj, target: newNode});
         });
 
-        // render the data using a hierarchical layout
-        var renderer = toolkit.render({
-            container: canvasElement,
-            consumeRightClick: false,
-            layout: {
-                type: "Hierarchical",
-                orientation: "horizontal",
-                padding: [60, 60]
-            },
-            miniview: {
-                container:miniviewElement,
-                initiallyVisible: false
-            },
-            lassoFilter: ".controls, .controls *, .miniview, .miniview *",
-            lassoInvert:true,
-            events: {
-                canvasClick: function (e) {
-                    toolkit.clearSelection();
-                },
-                modeChanged: function (mode) {
-                    jsPlumb.removeClass(jsPlumb.getSelector("[mode]"), "selected-mode");
-                    jsPlumb.addClass(jsPlumb.getSelector("[mode='" + mode + "']"), "selected-mode");
-                }
-            },
-            refreshLayoutOnEdgeConnect:true,
-            elementsDraggable: false,
-            jsPlumb:{
-                Anchors: ["Bottom", "Top"],
-                Connector: [ "StateMachine", { curviness: 10 } ],
-                PaintStyle: { lineWidth: 1, stroke: '#89bcde' },
-                HoverPaintStyle: { stroke: "#FF6600", lineWidth: 3 },
-                Endpoints: [
-                    [ "Dot", { radius: 2 } ],
-                    "Blank"
-                ],
-                EndpointStyle: { fill: "#89bcde" },
-                EndpointHoverStyle: { fill: "#FF6600" }
-            }
-        });
-
         // pan mode/select mode
-        jsPlumb.on(".controls", "tap", "[mode]", function () {
+        renderer.on(controls, "tap", "[mode]", function () {
             renderer.setMode(this.getAttribute("mode"));
         });
 
         // on home button click, zoom content to fit.
-        jsPlumb.on(".controls", "tap", "[reset]", function () {
+        renderer.on(controls, "tap", "[reset]", function () {
             toolkit.clearSelection();
             renderer.zoomToFit();
         });
@@ -112,14 +118,12 @@
         mergeHierarchy(hierarchy, hierarchy2, "2:");
         mergeHierarchy(hierarchy, hierarchy3, "3:");
 
-
-
         toolkit.load({
             data: hierarchy,
             onload:function() { renderer.zoomToFit(); }
         });
 
-        var datasetView = new jsPlumbSyntaxHighlighter(toolkit, ".jtk-demo-dataset");
+        var datasetView = jsPlumbToolkitSyntaxHighlighter.newInstance(toolkit, ".jtk-demo-dataset");
 
     });
 

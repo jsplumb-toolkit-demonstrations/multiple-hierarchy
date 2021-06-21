@@ -9,7 +9,8 @@
 /tmp
 
 # dependencies
-/node_modules
+node_modules
+_build
 
 # IDEs and editors
 /.idea

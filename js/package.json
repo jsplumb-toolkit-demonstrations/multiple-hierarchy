@@ -1,0 +1,11 @@
+{
+    "dependencies": {
+        "@jsplumbtoolkit/browser-ui": "^5.0.0-RC1",
+        "@jsplumbtoolkit/layout-hierarchical": "^5.0.0-RC1",
+        "@jsplumbtoolkit/plugin-miniview": "^5.0.0-RC1",
+        "@jsplumb/connector-bezier": "^5.0.0-RC1",
+        "@jsplumbtoolkit/plugin-lasso": "^5.0.0-RC1",
+        "@jsplumb/json-syntax-highlighter": "^1.0.4",
+        "@jsplumb/toolkit-demo-support": "^1.0.0"
+    }
+}
