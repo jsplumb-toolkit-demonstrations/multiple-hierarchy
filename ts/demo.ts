@@ -1,15 +1,19 @@
 import {
     EVENT_CANVAS_CLICK, EVENT_SURFACE_MODE_CHANGED,
-    EVENT_TAP,
-    LassoPlugin,
-    MiniviewPlugin,
-    newInstance,
-    ready
+    EVENT_TAP, SurfaceMode
 } from "@jsplumbtoolkit/browser-ui"
+import { AnchorLocations, BlankEndpoint, DotEndpoint } from "@jsplumb/core"
 import {HierarchicalLayout} from "@jsplumbtoolkit/layout-hierarchical"
-import {AnchorLocations, BlankEndpoint, DotEndpoint, StateMachineConnector} from "@jsplumb/core"
+import { StateMachineConnector } from "@jsplumb/connector-bezier"
 import {randomHierarchy, randomNode} from "@jsplumb/toolkit-demo-support"
 import { newInstance as newSyntaxHighlighter } from "@jsplumb/json-syntax-highlighter"
+import { LassoPlugin } from "@jsplumbtoolkit/browser-ui-plugin-lasso"
+import { MiniviewPlugin } from "@jsplumbtoolkit/browser-ui-plugin-miniview"
+import {
+    newInstance,
+    ready
+} from "@jsplumbtoolkit/browser-ui-vanilla"
+import {ObjectInfo, Vertex} from "@jsplumbtoolkit/core"
 
 ready(function () {
 
@@ -37,7 +41,7 @@ ready(function () {
             [EVENT_CANVAS_CLICK]: (e:Event) => {
                 toolkit.clearSelection()
             },
-            [EVENT_SURFACE_MODE_CHANGED]: (mode:string) => {
+            [EVENT_SURFACE_MODE_CHANGED]: (mode:SurfaceMode) => {
                 renderer.removeClass(controls.querySelectorAll("[mode]"), "selected-mode")
                 renderer.addClass(controls.querySelectorAll("[mode='" + mode + "']"), "selected-mode")
             }
@@ -77,7 +81,7 @@ ready(function () {
     // remove buttons. This callback finds the related Node and
     // then tells the toolkit to delete it and all of its descendants.
     //
-    renderer.bindModelEvent(EVENT_TAP, ".delete", function (event, target, info) {
+    renderer.bindModelEvent<Vertex>(EVENT_TAP, ".delete", (event:Event, target:Element, info:ObjectInfo<Vertex>) => {
         const selection = toolkit.selectDescendants(info.obj, true)
         toolkit.remove(selection)
     })
@@ -87,7 +91,7 @@ ready(function () {
     // add buttons. This callback adds an edge from the given node
     // to a newly created node, and then the layout is refreshed automatically.
     //
-    renderer.bindModelEvent(EVENT_TAP, ".add", function (event, target, info) {
+    renderer.bindModelEvent<Vertex>(EVENT_TAP, ".add", (event:Event, target:Element, info:ObjectInfo<Vertex>) => {
         // get data for a random node.
         const n = randomNode("node")
         // add the node to the toolkit
@@ -131,7 +135,7 @@ ready(function () {
 
     toolkit.load({
         data: hierarchy,
-        onload:function() { renderer.zoomToFit() }
+        onload:() => { renderer.zoomToFit() }
     })
 
     newSyntaxHighlighter(toolkit, ".jtk-demo-dataset")
