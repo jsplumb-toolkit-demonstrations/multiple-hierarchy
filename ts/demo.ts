@@ -6,8 +6,7 @@ import { BlankEndpoint, DotEndpoint } from "@jsplumb/core"
 import { AnchorLocations } from "@jsplumb/common"
 import {HierarchicalLayout} from "@jsplumbtoolkit/layout-hierarchical"
 import { StateMachineConnector } from "@jsplumb/connector-bezier"
-import {randomHierarchy, randomNode} from "@jsplumb/toolkit-demo-support"
-import { newInstance as newSyntaxHighlighter } from "@jsplumb/json-syntax-highlighter"
+import {randomHierarchy, randomNode} from "jsplumbtoolkit-demo-support"
 import { LassoPlugin } from "@jsplumbtoolkit/browser-ui-plugin-lasso"
 import { MiniviewPlugin } from "@jsplumbtoolkit/browser-ui-plugin-miniview"
 import {
@@ -138,7 +137,5 @@ ready(function () {
         data: hierarchy,
         onload:() => { renderer.zoomToFit() }
     })
-
-    newSyntaxHighlighter(toolkit, ".jtk-demo-dataset")
 
 })
