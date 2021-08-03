@@ -2,18 +2,17 @@ import {
     EVENT_CANVAS_CLICK, EVENT_SURFACE_MODE_CHANGED,
     EVENT_TAP, SurfaceMode,
     BlankEndpoint, DotEndpoint,
-    AnchorLocations
-} from "@jsplumbtoolkit/browser-ui"
+    AnchorLocations,
+    newInstance,
+    ready
+} from "@jsplumbtoolkit/browser-ui-vanilla"
 
 import {HierarchicalLayout} from "@jsplumbtoolkit/layout-hierarchical"
 import { StateMachineConnector } from "@jsplumb/connector-bezier"
 import {randomHierarchy, randomNode} from "jsplumbtoolkit-demo-support"
 import { LassoPlugin } from "@jsplumbtoolkit/browser-ui-plugin-lasso"
 import { MiniviewPlugin } from "@jsplumbtoolkit/browser-ui-plugin-miniview"
-import {
-    newInstance,
-    ready
-} from "@jsplumbtoolkit/browser-ui-vanilla"
+
 import {ObjectInfo, Vertex} from "@jsplumbtoolkit/core"
 
 ready(function () {
