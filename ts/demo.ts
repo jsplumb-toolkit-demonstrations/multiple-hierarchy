@@ -1,9 +1,10 @@
 import {
     EVENT_CANVAS_CLICK, EVENT_SURFACE_MODE_CHANGED,
-    EVENT_TAP, SurfaceMode
+    EVENT_TAP, SurfaceMode,
+    BlankEndpoint, DotEndpoint,
+    AnchorLocations
 } from "@jsplumbtoolkit/browser-ui"
-import { BlankEndpoint, DotEndpoint } from "@jsplumb/core"
-import { AnchorLocations } from "@jsplumb/common"
+
 import {HierarchicalLayout} from "@jsplumbtoolkit/layout-hierarchical"
 import { StateMachineConnector } from "@jsplumb/connector-bezier"
 import {randomHierarchy, randomNode} from "jsplumbtoolkit-demo-support"
