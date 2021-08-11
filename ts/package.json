@@ -3,11 +3,11 @@
         "build": "npx tsc;npx rollup -c rollup.config.js"
     },
     "dependencies": {
-        "@jsplumbtoolkit/browser-ui-vanilla": "^5.0.0-RC14",
-        "@jsplumbtoolkit/layout-hierarchical": "^5.0.0-RC14",
-        "@jsplumb/connector-bezier": "^5.0.0-RC14",
-        "@jsplumbtoolkit/browser-ui-plugin-miniview": "^5.0.0-RC14",
-        "@jsplumbtoolkit/browser-ui-plugin-lasso": "^5.0.0-RC14",
+        "@jsplumbtoolkit/browser-ui-vanilla": "^5.0.0-RC15",
+        "@jsplumbtoolkit/layout-hierarchical": "^5.0.0-RC15",
+        "@jsplumb/connector-bezier": "^5.0.0-RC15",
+        "@jsplumbtoolkit/browser-ui-plugin-miniview": "^5.0.0-RC15",
+        "@jsplumbtoolkit/browser-ui-plugin-lasso": "^5.0.0-RC15",
         "jsplumbtoolkit-demo-support": "^1.0.0"
     },
     "devDependencies": {
