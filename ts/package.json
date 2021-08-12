@@ -11,6 +11,7 @@
         "jsplumbtoolkit-demo-support": "^1.0.0"
     },
     "devDependencies": {
+        "@types/node": "14.17.3",
         "@babel/cli": "^7.4.4",
         "@babel/core": "^7.4.4",
         "@babel/plugin-proposal-class-properties": "^7.4.4",
