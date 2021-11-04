@@ -13,7 +13,7 @@ import {randomHierarchy, randomNode} from "jsplumbtoolkit-demo-support"
 import { LassoPlugin } from "@jsplumbtoolkit/browser-ui-plugin-lasso"
 import { MiniviewPlugin } from "@jsplumbtoolkit/browser-ui-plugin-miniview"
 
-import {ObjectInfo, Vertex} from "@jsplumbtoolkit/core"
+import {ObjectInfo, Node} from "@jsplumbtoolkit/core"
 
 ready(function () {
 
@@ -81,7 +81,7 @@ ready(function () {
     // remove buttons. This callback finds the related Node and
     // then tells the toolkit to delete it and all of its descendants.
     //
-    renderer.bindModelEvent<Vertex>(EVENT_TAP, ".delete", (event:Event, target:Element, info:ObjectInfo<Vertex>) => {
+    renderer.bindModelEvent<Node>(EVENT_TAP, ".delete", (event:Event, target:Element, info:ObjectInfo<Node>) => {
         const selection = toolkit.selectDescendants(info.obj, true)
         toolkit.remove(selection)
     })
@@ -91,7 +91,7 @@ ready(function () {
     // add buttons. This callback adds an edge from the given node
     // to a newly created node, and then the layout is refreshed automatically.
     //
-    renderer.bindModelEvent<Vertex>(EVENT_TAP, ".add", (event:Event, target:Element, info:ObjectInfo<Vertex>) => {
+    renderer.bindModelEvent<Node>(EVENT_TAP, ".add", (event:Event, target:Element, info:ObjectInfo<Node>) => {
         // get data for a random node.
         const n = randomNode("node")
         // add the node to the toolkit
